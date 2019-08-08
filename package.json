@@ -4,7 +4,8 @@
   "description": "This application parses a websites information and displays it back to you.",
   "main": "index.jsx",
   "scripts": {
-    "start": "parcel src/ui/index.html"
+    "start-ui": "parcel src/ui/index.html",
+    "start-server": "node src/server/app.js"
   },
   "author": "Jordan Leeper",
   "license": "ISC",

@@ -39,7 +39,6 @@ app.get('/', async (req, res) => {
   }
 });
 
-const server = app.listen(8080, () => {
-  const { host, port } = server.address();
-  console.log('App started');
+app.listen(8080, () => {
+  console.log('Backend started on port 8080');
 });
