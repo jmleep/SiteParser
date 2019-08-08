@@ -1,0 +1,31 @@
+.app {
+  padding-top: 20px;
+}
+
+.searchContent {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-content: center;
+}
+
+.button {
+  padding-left: 10px;
+}
+
+.imageHolder {
+  background-color: #808080;
+}
+
+.imageContent {
+  padding-top: 20px;
+  display: flex;
+  flex-flow: row;
+  align-content: center;
+  justify-content: center;
+}
+
+.imageCarouselHolder {
+  max-width: 1000px;
+  max-height: 1000px;
+}
