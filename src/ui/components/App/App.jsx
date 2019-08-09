@@ -11,16 +11,17 @@ document.body.style.margin = 0;
 const App = () => {
   const [siteUrl, setSiteUrl] = useState('https://www.experient-inc.com/');
   const [siteImages, setSiteImages] = useState(null);
+  const [siteWords, setSiteWords] = useState(null);
 
   const buttonClicked = async () => {
     setSiteImages(null);
-    const data = await fetchSite(siteUrl);
+    const { images, words } = await fetchSite(siteUrl);
 
-    setSiteImages(data);
+    setSiteImages(images);
+    setSiteWords(words);
   };
 
   const onKeyPress = e => {
-    console.log(e.key);
     if (e.key === 'Enter') {
       buttonClicked();
     }
@@ -50,6 +51,8 @@ const App = () => {
           {siteImages && <ImageCarousel images={siteImages} />}
         </div>
       </div>
+      {siteWords &&
+        Object.entries(siteWords).map(([key, value]) => <div>{`${key}: ${value.length}`}</div>)}
     </div>
   );
 };
