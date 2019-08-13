@@ -5,7 +5,7 @@
   "main": "index.jsx",
   "scripts": {
     "ui": "parcel src/ui/index.html",
-    "server": "node src/server/app.js"
+    "service": "node src/service/app.js"
   },
   "author": "Jordan Leeper",
   "license": "ISC",

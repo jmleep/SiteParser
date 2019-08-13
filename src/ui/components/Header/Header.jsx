@@ -1,9 +1,11 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
-import styles from './Header.css';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
+/**
+ * A header that returns the name of the site
+ */
 const Header = () => (
   <div>
     <AppBar position="static">
