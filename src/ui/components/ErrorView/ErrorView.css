@@ -1,0 +1,11 @@
+.error {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  height: 50px;
+}
+
+.errorText {
+  padding-left: 5px;
+}

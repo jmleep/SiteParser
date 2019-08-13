@@ -15,10 +15,17 @@ const parseHTML = (html, site) => {
   const imageElements = [...document.getElementsByTagName('img')];
 
   const images = imageElements.map(element => {
+    const img = {};
     if (!element.src.startsWith('http') && !element.src.includes('localhost')) {
-      return `${site}${element.src}`;
+      img.url = `${site}${element.src}`;
+    } else {
+      img.url = element.src;
     }
-    return element.src;
+
+    img.height = element.height;
+    img.width = element.width;
+
+    return img;
   });
 
   document.querySelectorAll('noscript').forEach(elem => {
@@ -36,24 +43,32 @@ const parseHTML = (html, site) => {
   cleanedUpText.forEach(str => {
     const alphanumeric = str
       .trim()
-      .replace(/\\/, '')
-      .replace(/[\W_]+/g, ' '); // remove non words/alphanumeric
+      .replace(/[.,/#!$%^&?"*;:{}=\-_`~()]/g, '')
+      .replace(/\\/, '');
+      // .replace(/[\W_]+/g, ' '); // remove non words/alphanumeric
     const multiWords = alphanumeric.split(' ');
 
     multiWords.forEach(word => {
       if (word.length > 0) {
         if (words[word]) {
-          words[word].push(word);
+          words[word] += 1;
         } else {
-          words[word] = [word];
+          words[word] = 1;
         }
       }
     });
-    //str.replace('/(?:\r\n|\r|\n)*/g', '');
   });
-  console.log(words);
 
-  return { images, words };
+  const wordCounts = [];
+  Object.entries(words).forEach(([key, value]) => {
+    wordCounts.push({
+      word: key,
+      count: value
+    });
+  });
+
+  wordCounts.sort((a, b) => b.count - a.count);
+  return { images, words: wordCounts };
 };
 
 app.get('/', async (req, res) => {
