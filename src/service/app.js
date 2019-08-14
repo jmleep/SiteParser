@@ -1,39 +1,15 @@
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
-const { JSDOM } = require('jsdom');
-const parseImages = require('./parseImages');
-const parseWords = require('./parseWords');
+const parseHTML = require('./parseHTML');
 
 const app = express();
 app.use(cors());
 
 const fetchSite = async site => axios.get(site, { crossdomain: true }).then(res => res.data);
 
-const parseHTML = (html, site) => {
-  const dom = new JSDOM(html);
-  const { document } = dom.window;
-
-  const images = parseImages(site, document);
-
-  // Remove possible elements that may be parsed for words
-  document.querySelectorAll('noscript').forEach(elem => {
-    elem.parentNode.removeChild(elem);
-  });
-  document.querySelectorAll('script').forEach(elem => {
-    elem.parentNode.removeChild(elem);
-  });
-  document.querySelectorAll('style').forEach(elem => {
-    elem.parentNode.removeChild(elem);
-  });
-
-  const words = parseWords(document);
-
-  return { images, words };
-};
-
 /**
- * This is the default route for the web service that accepts
+ * This is the api route for the web service that accepts
  * a query parameter (?site=https://www.example.com) containing
  * the desired website to search for.
  * The data is parsed and returned as json.

@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import ImageCarousel from '../ImageCarousel/ImageCarousel';
 import Header from '../Header/Header';
 import WordCountTable from '../WordCountTable/WordCountTable';
+import BarChart from '../BarChart/BarChart';
+import PieChart from '../PieChart/PieChart';
 import styles from './App.css';
 import fetchSite from '../../service/fetchSite';
 
@@ -19,6 +23,25 @@ const App = () => {
   const [siteImages, setSiteImages] = useState(null);
   const [siteWords, setSiteWords] = useState(null);
   const [searching, setSearching] = useState(false);
+  const [activeWordView, setActiveWordView] = useState(null);
+  const [wordDisplay, setWordDisplay] = useState(null);
+
+  useEffect(() => {
+    switch (activeWordView) {
+      case 'pie':
+        setWordDisplay(<PieChart words={siteWords} />);
+        break;
+      case 'bar':
+        setWordDisplay(<BarChart words={siteWords} />);
+        break;
+      case 'list':
+        setWordDisplay(<WordCountTable words={siteWords} />);
+        break;
+      default:
+        setWordDisplay(null);
+        break;
+    }
+  }, [activeWordView]);
 
   /*
    * On click of the search button, execute the request and
@@ -33,6 +56,7 @@ const App = () => {
 
     setSiteImages(images);
     setSiteWords(words);
+    setActiveWordView('pie');
     setSearching(false);
   };
 
@@ -73,7 +97,22 @@ const App = () => {
           <div className={styles.imageCarouselHolder}>
             {siteImages && <ImageCarousel images={siteImages} />}
           </div>
-          <div>{siteWords && <WordCountTable words={siteWords} />}</div>
+          <div>
+            {siteWords && wordDisplay}
+            {siteWords && (
+              <div className={styles.toggleGroup}>
+                <ToggleButtonGroup
+                  value={activeWordView}
+                  exclusive
+                  onChange={(_, value) => setActiveWordView(value)}
+                >
+                  <ToggleButton value="pie">Pie Chart</ToggleButton>
+                  <ToggleButton value="bar">Bar Chart</ToggleButton>
+                  <ToggleButton value="list">List All Words</ToggleButton>
+                </ToggleButtonGroup>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>

@@ -30,3 +30,9 @@
   max-height: 1000px;
   padding-right: 20px;
 }
+
+.toggleGroup {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
