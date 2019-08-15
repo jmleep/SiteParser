@@ -8,7 +8,7 @@ import styles from './ErrorView.css';
  * is populated with the provided text
  */
 const ErrorView = ({ text }) => (
-  <div className={styles.error}>
+  <div className={styles.error} data-testid="error">
     <Error color="error" />
     <span className={styles.errorText}>{text}</span>
   </div>

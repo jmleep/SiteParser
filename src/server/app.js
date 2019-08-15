@@ -24,7 +24,7 @@ app.get('/', async (req, res) => {
 
     res.json(parsedData);
   } catch (e) {
-    res.send(e);
+    res.send({ error: e });
   }
 });
 

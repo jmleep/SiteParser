@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
@@ -26,10 +26,12 @@ const App = () => {
   const [activeWordView, setActiveWordView] = useState(null);
   const [wordDisplay, setWordDisplay] = useState(null);
 
-  useEffect(() => {
+  /* Layout Effect recognizes a change to activeWordView or siteWords and
+  updates the active word chart/display in view */
+  useLayoutEffect(() => {
     switch (activeWordView) {
       case 'pie':
-        setWordDisplay(<PieChart words={siteWords} />);
+        setWordDisplay(<PieChart data-testid="pie" words={siteWords} />);
         break;
       case 'bar':
         setWordDisplay(<BarChart words={siteWords} />);
@@ -38,10 +40,10 @@ const App = () => {
         setWordDisplay(<WordCountTable words={siteWords} />);
         break;
       default:
-        setWordDisplay(null);
+        setWordDisplay(<PieChart words={[]} />);
         break;
     }
-  }, [activeWordView]);
+  }, [activeWordView, siteWords]);
 
   /*
    * On click of the search button, execute the request and
@@ -75,6 +77,7 @@ const App = () => {
       <br />
       <div className={styles.search}>
         <TextField
+          data-testid="textfield"
           placeholder="Search for a website..."
           onChange={e => setSiteUrl(e.target.value)}
           value={siteUrl}
@@ -83,13 +86,18 @@ const App = () => {
           style={{ width: '300px' }}
         />
         <div className={styles.button}>
-          <Button variant="contained" color="primary" onClick={() => buttonClicked()}>
+          <Button
+            data-testid="button"
+            variant="contained"
+            color="primary"
+            onClick={() => buttonClicked()}
+          >
             Get Site
           </Button>
         </div>
       </div>
       {searching ? (
-        <div className={styles.content}>
+        <div data-testid="circle" className={styles.content}>
           <CircularProgress />
         </div>
       ) : (
@@ -99,7 +107,7 @@ const App = () => {
           </div>
           <div>
             {siteWords && wordDisplay}
-            {siteWords && (
+            {siteWords && siteWords.length > 0 && (
               <div className={styles.toggleGroup}>
                 <ToggleButtonGroup
                   value={activeWordView}

@@ -21,6 +21,7 @@ const WordCountTable = ({ words }) => (
   <React.Fragment>
     {words.length > 0 && (
       <Chip
+        data-testid="chip"
         label={`${words.length} words found`}
         style={{ marginBottom: '3px', tableLayout: 'auto' }}
       />
@@ -28,30 +29,32 @@ const WordCountTable = ({ words }) => (
     <Paper>
       <div className={styles.table}>
         {words.length > 0 ? (
-          <Table style={{ width: '500px' }}>
-            <TableHead>
-              <TableRow>
-                <TableCell>Word</TableCell>
-                <TableCell align="left">Occurences</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {words.map(({ word, count }) => (
-                <TableRow key={word}>
-                  <TableCell
-                    component="th"
-                    scope="row"
-                    style={{ whiteSpace: 'normal', wordWrap: 'break-word', maxWidth: '250px' }}
-                  >
-                    {word}
-                  </TableCell>
-                  <TableCell align="left">{count}</TableCell>
+          <div data-testid="table">
+            <Table style={{ width: '500px' }}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Word</TableCell>
+                  <TableCell align="left">Occurences</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHead>
+              <TableBody>
+                {words.map(({ word, count }) => (
+                  <TableRow key={word}>
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      style={{ whiteSpace: 'normal', wordWrap: 'break-word', maxWidth: '250px' }}
+                    >
+                      {word}
+                    </TableCell>
+                    <TableCell align="left">{count}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         ) : (
-          <ErrorView text="No images found.." />
+          <ErrorView data-testid="error" text="No images found.." />
         )}
       </div>
     </Paper>

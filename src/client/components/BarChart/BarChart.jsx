@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { HorizontalBar } from 'react-chartjs-2';
 import Paper from '@material-ui/core/Paper';
 import Chip from '@material-ui/core/Chip';
+import ErrorView from '../ErrorView/ErrorView';
 
 const BarChart = ({ words = [] }) => {
   const top10Words = words.slice(0, 10);
@@ -25,17 +26,24 @@ const BarChart = ({ words = [] }) => {
     <div>
       {words.length > 0 && (
         <Chip
+          data-testid="chip"
           label={`${words.length} words found`}
           style={{ marginBottom: '3px', tableLayout: 'auto' }}
         />
       )}
       <Paper>
-        <HorizontalBar
-          data={data}
-          width={500}
-          options={{ title: { display: true, text: 'Top 10 Words' } }}
-          height={500}
-        />
+        {words.length > 0 ? (
+          <div data-testid="bar">
+            <HorizontalBar
+              data={data}
+              width={500}
+              options={{ title: { display: true, text: 'Top 10 Words' } }}
+              height={500}
+            />
+          </div>
+        ) : (
+          <ErrorView data-testid="error" text="No images found.." />
+        )}
       </Paper>
     </div>
   );

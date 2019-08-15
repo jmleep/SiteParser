@@ -2,7 +2,9 @@
   "parser": "babel-eslint",
   "extends": ["airbnb"],
   "env": {
-    "browser": true
+    "browser": true,
+    "node": true,
+    "jest": true
   },
   "rules": {
     "arrow-body-style": ["error", "as-needed"],
@@ -10,6 +12,8 @@
     "max-len": ["error", { "code": 100 }],
     "comma-dangle": 0,
     "linebreak-style": 0,
-    "implicit-arrow-linebreak": 0
-  }
+    "implicit-arrow-linebreak": 0,
+    "react/jsx-filename-extension": 0
+  },
+  "plugins": ["jest"]
 }
