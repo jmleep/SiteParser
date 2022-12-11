@@ -18,7 +18,7 @@
     "chart.js": "^2.8.0",
     "cors": "^2.8.5",
     "dom-parser": "^0.1.6",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "jquery": ">=1.8.0",
     "jsdom": "^15.1.1",
     "parcel-bundler": "^1.12.3",
